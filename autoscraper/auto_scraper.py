@@ -11,7 +11,6 @@ from autoscraper.utils import (
     FuzzyText,
     ResultItem,
     get_non_rec_text,
-    get_random_str,
     normalize,
     text_match,
     unique_hashable,
@@ -224,6 +223,9 @@ class AutoScraper(object):
         List of similar results
         """
 
+        if not wanted_list and not (wanted_dict and any(wanted_dict.values())):
+            raise ValueError("No targets were supplied")
+
         soup = self._get_soup(url=url, html=html, request_args=request_args)
 
         result_list = []
@@ -291,7 +293,7 @@ class AutoScraper(object):
         )
         stack["url"] = url if is_full_url else ""
         stack["hash"] = hashlib.sha256(str(stack).encode("utf-8")).hexdigest()
-        stack["stack_id"] = "rule_" + get_random_str(4)
+        stack["stack_id"] = "rule_" + stack["hash"][:8]
         return stack
 
     def _get_result_for_child(self, child, soup, url):

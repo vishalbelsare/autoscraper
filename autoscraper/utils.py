@@ -1,7 +1,5 @@
 from collections import OrderedDict
 
-import random
-import string
 import unicodedata
 
 from difflib import SequenceMatcher
@@ -22,11 +20,6 @@ def unique_stack_list(stack_list):
 def unique_hashable(hashable_items):
     """Removes duplicates from the list. Must preserve the orders."""
     return list(OrderedDict.fromkeys(hashable_items))
-
-
-def get_random_str(n):
-    chars = string.ascii_lowercase + string.digits
-    return ''.join(random.choice(chars) for i in range(n))
 
 
 def get_non_rec_text(element):
